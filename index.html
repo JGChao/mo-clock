@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" rem="750">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./rems.css">
+    <title>小小时钟</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .time{
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: url(./image/time.gif) no-repeat center center;
+        background-size: 100% 115%;
+    }
+    .timebox{
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .li{
+        font-size: 0.45rem;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 0.2rem;
+    }
+    .coun{
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .tt{
+        width: 100%;
+        height: auto;
+        font-size: 0.6rem;
+        text-align: center;
+        color: #fff;
+        margin-bottom: 0.2rem;
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <div class="time">
+        <ul class="timebox"></ul>
+        <ul class="coun"></ul>
+    </div>
+</body>
+<script>
+    window.onload=(()=>{
+        let demo = document.querySelector('.timebox');
+        let damo = document.querySelector('.coun');
+        function timer(){
+            let s,b;
+            let nowdata = new Date();
+            let year = nowdata.getFullYear();
+            let month = nowdata.getMonth() + 1;
+            month = month >= 10? month : '0'+month;
+            let day = nowdata.getDate();
+            day = day >= 10? day :'0'+day;
+            s = year + '-' + month + '-' + day;
+            let hour = nowdata.getHours();
+            hour = hour >= 10? hour : '0'+hour;
+            let min  = nowdata.getMinutes();
+            min = min >= 10? min :'0'+min;
+            let sec = nowdata.getSeconds();
+            sec = sec >= 10? sec : '0'+sec;
+            b = hour + ':' + min + ':' + sec;
+            return demo.innerHTML = `
+                <li class="year li">${s}</li>
+                <li class="data li">${b}</li>
+            ` 
+        };
+        function contimer() {
+            var oDate = new Date();
+            var oldTime = oDate.getTime();
+            var newDate = new Date('2020/1/24 00:00:00');
+            var newTime = newDate.getTime();
+            var second = Math.floor((newTime - oldTime) / 1000);
+            var day = Math.floor(second / 86400);
+            second = second % 86400;
+            var hour = Math.floor(second / 3600);
+            second %= 3600;
+            var minute = Math.floor(second / 60);
+            second %= 60;
+            var js = day + '天' + hour + '小时' + minute + '分钟' + second + '秒'; 
+            return damo.innerHTML = `
+                <li class="title tt">距离2020年除夕还有</li>
+                <li class="jtime tt">${js}</li>
+            `
+        }
+        setInterval(()=>{
+            timer();
+            contimer();
+        },1000)
+    })
+</script>
+</html>
